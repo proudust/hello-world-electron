@@ -15,9 +15,14 @@
     "url": "https://github.com/proudust/hello-world-electron/issues"
   },
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "npx run-script-os",
+    "build:default": "electron-builder build",
+    "build:windows": "electron-builder.cmd build"
   },
   "devDependencies": {
-    "electron": "^7.1.10"
+    "electron": "^7.1.10",
+    "electron-builder": "^22.3.2",
+    "run-script-os": "^1.0.7"
   }
 }
