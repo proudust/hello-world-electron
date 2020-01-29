@@ -14,5 +14,10 @@
   "bugs": {
     "url": "https://github.com/proudust/hello-world-electron/issues"
   },
-  "scripts": {}
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^7.1.10"
+  }
 }
