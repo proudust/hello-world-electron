@@ -83,7 +83,11 @@ async function build(context: Context, isDir: boolean): Promise<void> {
     config: {
       appId: 'io.github.proudust.helloworld-electron',
       extraMetadata: { main },
-      files: [{ filter: 'package.json' }, { from: './dist' }],
+      files: [
+        '!**/*',
+        { filter: 'package.json' },
+        { from: './dist', filter: ['main', 'renderer', 'preload.js'] },
+      ],
       win: {
         target: 'portable',
       },
