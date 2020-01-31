@@ -1,8 +1,11 @@
-const { app, BrowserWindow } = require('electron')
+import * as path from "path"
+import { app, BrowserWindow } from 'electron'
+
+const appPath = app.isPackaged ? app.getAppPath() : path.join(app.getAppPath(), '..')
 
 // ウインドウオブジェクトのグローバル参照を保持してください。さもないと、そのウインドウは
 // JavaScript オブジェクトがガベージコレクションを行った時に自動的に閉じられます。
-let win
+let win: BrowserWindow | null = null
 
 function createWindow() {
   // browser window を生成する
@@ -15,7 +18,7 @@ function createWindow() {
   })
 
   // そしてこのアプリの index.html をロード
-  win.loadFile('index.html')
+  win.loadURL(path.join(appPath, 'renderer', 'index.html'))
 
   // 開発者ツールを開く
   win.webContents.openDevTools()

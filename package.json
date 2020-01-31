@@ -15,14 +15,20 @@
     "url": "https://github.com/proudust/hello-world-electron/issues"
   },
   "scripts": {
-    "start": "electron .",
-    "build": "npx run-script-os",
-    "build:default": "electron-builder build",
-    "build:windows": "electron-builder.cmd build"
+    "start": "ts-node fuse.ts dev",
+    "build": "ts-node fuse.ts build",
+    "build:prod": "ts-node fuse.ts build:prod",
+    "build:dir": "ts-node fuse.ts build:dir"
+  },
+  "dependencies": {
+    "typescript": "^3.7.5"
   },
   "devDependencies": {
     "electron": "^7.1.10",
     "electron-builder": "^22.3.2",
-    "run-script-os": "^1.0.7"
+    "fuse-box": "^4.0.0-next.165",
+    "run-script-os": "^1.0.7",
+    "ts-node": "^8.6.2",
+    "tslib": "^1.10.0"
   }
 }
