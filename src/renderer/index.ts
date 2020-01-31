@@ -7,6 +7,6 @@ const head = document.createElement('h1')
 head.appendChild(document.createTextNode('Hello World!'));
 root.appendChild(head);
 
-root.appendChild(document.createTextNode(`node ${process.versions.node}、
-Chrome ${process.versions.chrome}、
-Electron ${process.versions.electron} を使用しています。`));
+root.appendChild(document.createTextNode(`node ${window.main.versions.node}、
+Chrome ${window.main.versions.chrome}、
+Electron ${window.main.versions.electron} を使用しています。`));

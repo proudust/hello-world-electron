@@ -1,7 +1,11 @@
+import * as procces from 'child_process';
 import * as builder from 'electron-builder';
-import { fusebox, sparky } from 'fuse-box';
+import { fusebox, sparky, pluginReplace } from 'fuse-box';
+import { promisify } from "util";
 
 class Context {
+  public isProduction: boolean | undefined = undefined;
+
   public getMainConfig(): ReturnType<typeof fusebox> {
     return fusebox({
       entry: 'index.ts',
@@ -24,12 +28,12 @@ class Context {
     return fusebox({
       entry: 'index.ts',
 
-      target: 'electron',
+      target: 'browser',
       output: 'dist/renderer/$name-$hash',
       homeDir: 'src/renderer',
       webIndex: {
         publicPath: './',
-        template: 'src/renderer/index.html',
+        template: `src/renderer/index.${this.isProduction ? 'prod' : 'dev'}.html`,
       },
       cache: {
         enabled: false,
@@ -50,8 +54,11 @@ class Context {
 const { task, rm, exec } = sparky(Context);
 
 task('dev', async context => {
+  context.isProduction = false;
+
   await rm('./dist');
 
+  await promisify(procces.exec)(`tsc ./src/main/preload.ts --outDir ./dist`);
   await context.getRendererConfig().runDev();
   await context.getMainConfig().runDev(handler => {
     handler.onComplete(output => {
@@ -61,8 +68,11 @@ task('dev', async context => {
 });
 
 async function build(context: Context, isDir: boolean) {
+  context.isProduction = true;
+
   await rm('./dist');
 
+  await promisify(procces.exec)(`tsc ./src/main/preload.ts --outDir ./dist`);
   await context.getRendererConfig().runProd({ uglify: false });
   const response = await context.getMainConfig().runProd({ uglify: true });
 
