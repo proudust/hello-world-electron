@@ -1,7 +1,7 @@
 import * as procces from 'child_process';
 import * as builder from 'electron-builder';
-import { fusebox, sparky, pluginReplace } from 'fuse-box';
-import { promisify } from "util";
+import { fusebox, sparky } from 'fuse-box';
+import { promisify } from 'util';
 
 class Context {
   public isProduction: boolean | undefined = undefined;
@@ -22,9 +22,10 @@ class Context {
 
       logging: { level: 'succinct' },
     });
-  };
+  }
 
   public getRendererConfig(): ReturnType<typeof fusebox> {
+    const template = this.isProduction ? 'index.prod.html' : 'index.dev.html';
     return fusebox({
       entry: 'index.tsx',
 
@@ -33,7 +34,7 @@ class Context {
       homeDir: 'src/renderer',
       webIndex: {
         publicPath: './',
-        template: `src/renderer/index.${this.isProduction ? 'prod' : 'dev'}.html`,
+        template: `src/renderer/${template}`,
       },
       cache: {
         enabled: false,
@@ -48,8 +49,8 @@ class Context {
 
       logging: { level: 'succinct' },
     });
-  };
-};
+  }
+}
 
 const { task, rm, exec } = sparky(Context);
 
@@ -67,7 +68,7 @@ task('dev', async context => {
   });
 });
 
-async function build(context: Context, isDir: boolean) {
+async function build(context: Context, isDir: boolean): Promise<void> {
   context.isProduction = true;
 
   await rm('./dist');
@@ -82,19 +83,16 @@ async function build(context: Context, isDir: boolean) {
     config: {
       appId: 'io.github.proudust.helloworld-electron',
       extraMetadata: { main },
-      files: [
-        { filter: 'package.json' },
-        { from: './dist' },
-      ],
+      files: [{ filter: 'package.json' }, { from: './dist' }],
       win: {
-        target: 'portable'
+        target: 'portable',
       },
       mac: {
-        target: 'zip'
+        target: 'zip',
       },
       linux: {
-        target: 'zip'
-      }
+        target: 'zip',
+      },
     },
   });
 }

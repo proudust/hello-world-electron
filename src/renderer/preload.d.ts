@@ -1,4 +1,4 @@
-import { main } from "../main/preload";
+import { main } from '../main/preload';
 
 declare global {
   interface Window {
