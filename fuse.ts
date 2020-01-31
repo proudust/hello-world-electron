@@ -26,7 +26,7 @@ class Context {
 
   public getRendererConfig(): ReturnType<typeof fusebox> {
     return fusebox({
-      entry: 'index.ts',
+      entry: 'index.tsx',
 
       target: 'browser',
       output: 'dist/renderer/$name-$hash',

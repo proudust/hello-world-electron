@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "strict": true
+    "strict": true,
+    "esModuleInterop": true,
+    "jsx": "react"
   }
 }

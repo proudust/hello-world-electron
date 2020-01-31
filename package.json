@@ -21,6 +21,10 @@
     "build:dir": "ts-node fuse.ts build:dir"
   },
   "dependencies": {
+    "@types/react": "^16.9.19",
+    "@types/react-dom": "^16.9.5",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "typescript": "^3.7.5"
   },
   "devDependencies": {
